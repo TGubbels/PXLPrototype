@@ -3,37 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Doctrine\ORM\EntityManagerInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request, EntityManagerInterface $em): JsonResponse
+    public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $user = $em->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
-
-        if (!$user || !$user->validatePassword($credentials['password'])) {
+        if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Invalid credentials'
             ], 401);
         }
 
-        $token = $user->createToken('auth-token')->plainTextToken;
+        $user = User::where('email', $credentials['email'])->first();
+        $token = $user->createToken('api-token');
 
         return response()->json([
-            'token' => $token,
-            'user' => [
-                'id' => $user->getId(),
-                'name' => $user->getName(),
-                'email' => $user->getEmail()
-            ]
+            'token' => $token->plainTextToken
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out']);
     }
 }

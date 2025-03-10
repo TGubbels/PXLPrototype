@@ -40,8 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -61,14 +64,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'doctrine',
+            'driver' => 'eloquent',
             'model' => App\Models\User::class
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
