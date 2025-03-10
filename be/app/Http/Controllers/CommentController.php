@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -9,30 +10,19 @@ use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
-    public function store(Request $request): JsonResponse
+    public function store(CommentRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'content' => 'required|string',
-            'article_id' => 'required|exists:articles,id',
-            'parent_id' => 'nullable|exists:comments,id'
-        ]);
-
         $user = auth()->user();
 
         $comment = Comment::create([
-            'content' => $validated['content'],
-            'article_id' => $validated['article_id'],
-            'parent_id' => $validated['parent_id'] ?? null,
-            'user_id' => $user->id,
-            'user_name' => $user->name
+            'content' => $request->validated()['content'],
+            'article_id' => $request->validated()['article_id'],
+            'parent_id' => $request->validated()['parent_id'] ?? null,
+            'user_id' => $user->id
         ]);
 
-        return response()->json($comment->load(['user', 'replies']), 201);
-    }
-
-    public function show(Comment $comment): JsonResponse
-    {
-        return response()->json($comment->load(['user', 'replies.user']));
+        $comment->load(['user', 'replies']);
+        return response()->json($comment, 201);
     }
 
     public function reply(Request $request, $commentId)
@@ -54,10 +44,10 @@ class CommentController extends Controller
             'content' => $validated['content'],
             'article_id' => $comment->article_id,
             'parent_id' => $commentId,
-            'user_id' => $user->id,
-            'user_name' => $user->name
+            'user_id' => $user->id
         ]);
 
-        return response()->json($reply->load(['user']), 201);
+        $reply->load(['user']);
+        return response()->json($reply, 201);
     }
 }

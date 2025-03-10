@@ -15,17 +15,8 @@ class CommentRequest extends FormRequest
     {
         return [
             'content' => 'required|string',
-            'parent_comment_id' => 'nullable|integer|exists:comments,id'
+            'article_id' => 'required|exists:articles,id',
+            'parent_id' => 'nullable|exists:comments,id'
         ];
-    }
-
-    public function getContent(bool $asResource = false): string
-    {
-        return $this->validated()['content'];
-    }
-
-    public function getParentCommentId(): ?int
-    {
-        return $this->validated()['parent_comment_id'] ?? null;
     }
 }

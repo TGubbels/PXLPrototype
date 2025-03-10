@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class ArticleController extends Controller
 {
+
     public function index()
     {
         $user = auth()->user();
@@ -16,9 +17,15 @@ class ArticleController extends Controller
             'user_name' => $user->name,
             'token' => $user->currentAccessToken()->name
         ]);
-        $articles = Article::with(['user', 'comments.user'])->get();
+
+        $articles = Article::with(['user', 'comments.user:id,name'])->get();
 
         return response()->json($articles);
+    }
+
+    public function show(Article $article)
+    {
+        return response()->json($article->load(['user', 'comments.user:id,name']));
     }
 
     public function store(Request $request)
@@ -35,10 +42,7 @@ class ArticleController extends Controller
         return response()->json($article, 201);
     }
 
-    public function show(Article $article)
-    {
-        return response()->json($article->load(['user', 'comments.user']));
-    }
+
 
     public function update(Request $request, Article $article)
     {
