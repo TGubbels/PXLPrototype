@@ -1,0 +1,17 @@
+name: PXLprototype
+services:
+    mysql:
+        image: bitnami/mysql:8.0.34
+        container_name: mysql_container
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: be
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql_data:/bitnami/mysql
+
+volumes:
+    mysql_data:
