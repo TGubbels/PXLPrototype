@@ -2,47 +2,72 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Doctrine\ORM\Mapping as ORM;
+use Illuminate\Support\Facades\Hash;
+use LaravelDoctrine\ORM\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class User extends Authenticatable
+#[ORM\Entity]
+#[ORM\Table(name: 'users')]
+class User implements AuthenticatableContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Authenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    protected int $id;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    #[ORM\Column(type: 'string')]
+    protected string $name;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    #[ORM\Column(type: 'string', unique: true)]
+    protected string $email;
+
+    #[ORM\Column(type: 'string')]
+    protected string $password;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $email_verified_at = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $remember_token = null;
+
+    public function getId(): int
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = Hash::make($password);
+    }
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+    public function validatePassword(string $password): bool
+    {
+        return Hash::check($password, $this->password);
     }
 }
