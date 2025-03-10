@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ArticleController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
+        Log::info('Request made by user:', [
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'token' => $user->currentAccessToken()->name
+        ]);
         $articles = Article::with(['user', 'comments.user'])->get();
+
         return response()->json($articles);
     }
 
