@@ -28,10 +28,8 @@ class User implements AuthenticatableContract
     protected string $password;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $email_verified_at = null;
+    protected ?\DateTime $email_verified_at;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    protected ?string $remember_token = null;
 
     public function getId(): int
     {
@@ -70,4 +68,12 @@ class User implements AuthenticatableContract
     {
         return Hash::check($password, $this->password);
     }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
