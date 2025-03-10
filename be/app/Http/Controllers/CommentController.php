@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
 use App\Models\Comment;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, Article $article)
+    public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'content' => 'required|string'
+            'content' => 'required|string',
+            'article_id' => 'required|exists:articles,id',
+            'parent_id' => 'nullable|exists:comments,id'
         ]);
 
-        $comment = new Comment($validated);
-        $comment->user()->associate($request->user());
-        $comment->article()->associate($article);
-        $comment->save();
+        $comment = Comment::create([
+            'content' => $validated['content'],
+            'article_id' => $validated['article_id'],
+            'parent_id' => $validated['parent_id'] ?? null,
+            'user_id' => auth()->id()
+        ]);
 
-        return response()->json($comment->load('user'), 201);
+        return response()->json($comment->load(['user', 'replies']), 201);
     }
 
-    public function destroy(Request $request, Article $article, Comment $comment)
+    public function show(Comment $comment): JsonResponse
     {
-        if ($comment->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        $comment->delete();
-
-        return response()->json(['message' => 'Comment deleted']);
+        return response()->json($comment->load(['user', 'replies.user']));
     }
 }
