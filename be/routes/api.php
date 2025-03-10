@@ -17,5 +17,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/articles/{id}', [ArticleController::class, 'show']);
     Route::post('/articles', [ArticleController::class, 'store']);
     Route::post('/articles/{articleId}/comments', [CommentController::class, 'store']);
+    Route::post('/comments/{commentId}/reply', [CommentController::class, 'reply']);
     Route::post('/comments/{commentId}/vote', [CommentController::class, 'vote']);
 });
