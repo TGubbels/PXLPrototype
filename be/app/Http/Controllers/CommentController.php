@@ -52,9 +52,10 @@ class CommentController extends Controller
         ]);
 
         Notification::createNotification(
-            $comment->user_id,
+
             $comment->article_id,
             NotificationType::REPLY_TO_COMMENT,
+            $comment->user_id,
             $validated['content']
         );
 

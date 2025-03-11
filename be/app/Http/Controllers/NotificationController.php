@@ -11,7 +11,9 @@ class NotificationController extends Controller
     public function index(Request $request): JsonResponse
     {
         $user = $request->user();
-        $notifications = Notification::where('user_id', $user->id)->get();
+        $notifications = Notification::where('user_id', $user->id)
+            ->orWhereNull('user_id')
+            ->get();
 
         return response()->json($notifications);
     }

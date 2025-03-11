@@ -43,9 +43,10 @@ class ArticleController extends Controller
         $article->save();
 
         Notification::createNotification(
-            auth()->id(),
             $article->id,
-            NotificationType::NEW_ARTICLE
+            NotificationType::NEW_ARTICLE,
+            null,
+            'A new article has been posted.'
         );
 
         return response()->json($article, 201);

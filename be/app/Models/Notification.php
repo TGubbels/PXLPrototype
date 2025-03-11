@@ -29,7 +29,8 @@ class Notification extends Model
         return $this->belongsTo(Article::class);
     }
 
-    public static function createNotification($userId, $articleId, NotificationType $type, $content = null)
+
+    public static function createNotification($articleId, NotificationType $type, $userId = null, $content = null)
     {
         return self::create([
             'user_id' => $userId,

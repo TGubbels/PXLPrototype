@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->text('content')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->enum('type', ['new_article', 'reply_to_comment']);
             $table->timestamps();
