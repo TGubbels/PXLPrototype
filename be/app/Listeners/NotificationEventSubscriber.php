@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Enums\NotificationType;
 use App\Events\ArticleCreated;
+use App\Events\NotificationAdded;
 use App\Events\ReplyToCommentAdded;
 use App\Models\Comment;
 use App\Models\Notification;
@@ -20,15 +21,20 @@ class NotificationEventSubscriber
     {
         //
     }
+
     public function handleArticleCreated(ArticleCreated $event)
     {
-        Notification::createNotification($event->article->id, NotificationType::NEW_ARTICLE);
+         $notification = Notification::createNotification(
+            $event->article->id,
+            NotificationType::NEW_ARTICLE
+        );
+        NotificationAdded::dispatch($notification);
     }
 
 
     public function handleReplyToCommentAdded(ReplyToCommentAdded $event)
     {
-
+        $notification =
         Notification::createNotification(
 
             $event->reply->article_id,
@@ -36,7 +42,9 @@ class NotificationEventSubscriber
             $event->comment_id,
             $event->reply->content
         );
+        NotificationAdded::dispatch($notification);
     }
+
     /**
      * Handle the event.
      */

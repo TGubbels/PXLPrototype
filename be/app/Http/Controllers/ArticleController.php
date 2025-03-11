@@ -22,7 +22,7 @@ class ArticleController extends Controller
         ]);
 
         $articles = Article::with(['user', 'comments.user:id,name'])->get();
-
+        broadcast("null");
         return response()->json($articles);
     }
 
