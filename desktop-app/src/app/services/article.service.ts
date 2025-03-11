@@ -1,16 +1,17 @@
 // src/app/services/article.service.ts
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../models/article.interface';
 import { ArticleComment } from '../models/comment.interface';
+import { EchoService } from './echo.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
   private apiUrl = 'http://localhost:8088/api';
-
+  //private echoService: EchoService = inject(EchoService);
   constructor(private http: HttpClient) { }
 
   getArticles(): Observable<Article[]> {
