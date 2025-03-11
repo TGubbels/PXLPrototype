@@ -18,18 +18,19 @@ export class NotificationService implements  OnDestroy{
     this.getNotifications().subscribe();
 
     // Listen for new notifications
-    this.echoService.listenToChannel('notifications', 'NotificationAdded', (notification: Notification) => {
+    this.echoService.listenToChannel('notifications', 'NotificationAdded', (notification) => {
       const currentNotifications = this.notifications();
-      this.notifications.set([...currentNotifications, notification]);
+      this.notifications.set([...currentNotifications, notification.notification]);
       console.log('User-specific notification:', notification);
     });
 
     // Listen for user-specific notifications
     this.echoService.listenToChannel(`notifications.user.1`, 'NotificationAdded', 
-      (notification: Notification) => {
+      (notification) => {
         const currentNotifications = this.notifications();
-        this.notifications.set([...currentNotifications, notification]);
+        this.notifications.set([...currentNotifications, notification.notification]);
         console.log('User-specific notification:', notification);
+        console.log(this.notifications());
     });
   }
 

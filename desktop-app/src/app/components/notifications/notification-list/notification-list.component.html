@@ -1,7 +1,7 @@
 <div class="notifications-container">
     <h2>Notifications</h2>
     <div class="notification-list">
-      <div *ngFor="let notification of notifications" 
+      <div *ngFor="let notification of this.notificationService.notifications()" 
            class="notification-item"
            [routerLink]="['/articles', notification.article_id]">
         <div class="notification-icon" [ngClass]="notification.type">
