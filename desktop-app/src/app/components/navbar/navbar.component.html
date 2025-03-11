@@ -8,6 +8,6 @@
   Notifications
 </a>
       <a *ngIf="!(authService.isAuthenticated() | async)" routerLink="/login" [class.active]="isActive('/login')">Login</a>
-      <a *ngIf="authService.isAuthenticated() | async" (click)="logout()" style="cursor: pointer;">Logout</a>
+      <a *ngIf="authService.isAuthenticated() | async" (click)="logout()" style="cursor: pointer;">Logout: {{authService.userName}}</a>
     </div>
   </nav>

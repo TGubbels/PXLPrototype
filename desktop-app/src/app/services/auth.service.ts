@@ -9,6 +9,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:8088/api';
   private tokenKey = 'auth_token';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  userName: string | null = localStorage.getItem('user_name') ;
 
   constructor(private http: HttpClient) {
     this.isAuthenticatedSubject.next(!!this.getToken());
@@ -21,6 +22,9 @@ export class AuthService {
           if (response.token) {
             localStorage.setItem(this.tokenKey, response.token);
             this.isAuthenticatedSubject.next(true);
+          };
+          if(response.user_name){
+            localStorage.setItem('user_name', response.user_name);
           }
         })
       );
