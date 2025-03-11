@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationType;
 use App\Models\Article;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -39,6 +41,12 @@ class ArticleController extends Controller
         $article = new Article($validated);
         $article->user()->associate($request->user());
         $article->save();
+
+        Notification::createNotification(
+            auth()->id(),
+            $article->id,
+            NotificationType::NEW_ARTICLE
+        );
 
         return response()->json($article, 201);
     }
