@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\NotificationType;
+use App\Events\ReplyToCommentAdded;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Notification;
@@ -51,13 +52,7 @@ class CommentController extends Controller
             'user_id' => $user->id
         ]);
 
-        Notification::createNotification(
-
-            $comment->article_id,
-            NotificationType::REPLY_TO_COMMENT,
-            $comment->user_id,
-            $validated['content']
-        );
+        ReplyToCommentAdded::dispatch($reply, $comment->user_id);
 
         $reply->load(['user']);
         return response()->json($reply, 201);

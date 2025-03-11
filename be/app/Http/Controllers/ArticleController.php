@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\NotificationType;
+use App\Events\ArticleCreated;
 use App\Models\Article;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -42,12 +43,8 @@ class ArticleController extends Controller
         $article->user()->associate($request->user());
         $article->save();
 
-        Notification::createNotification(
-            $article->id,
-            NotificationType::NEW_ARTICLE,
-            null,
-            'A new article has been posted.'
-        );
+        ArticleCreated::dispatch($article);
+
 
         return response()->json($article, 201);
     }
