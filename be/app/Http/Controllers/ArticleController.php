@@ -23,9 +23,10 @@ class ArticleController extends Controller
         return response()->json($articles);
     }
 
-    public function show(Article $article)
+    public function show($articleId)
     {
-        return response()->json($article->load(['user', 'comments.user:id,name']));
+        $article = Article::with(['user', 'comments.user:id,name'])->findOrFail($articleId);
+        return response()->json($article);
     }
 
     public function store(Request $request)

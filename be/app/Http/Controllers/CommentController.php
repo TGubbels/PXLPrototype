@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
-    public function store(CommentRequest $request): JsonResponse
+    public function store(Request $request, $articleId): JsonResponse
     {
         $user = auth()->user();
-
+        $validated = $request->validate([
+            'content' => 'required|string'
+        ]);
         $comment = Comment::create([
-            'content' => $request->validated()['content'],
-            'article_id' => $request->validated()['article_id'],
-            'parent_id' => $request->validated()['parent_id'] ?? null,
+            'content' => $validated['content'],
+            'article_id' => $articleId,
+            'parent_id' =>  null,
             'user_id' => $user->id
         ]);
 
