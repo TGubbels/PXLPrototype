@@ -1,0 +1,112 @@
+.notification-widget {
+    position: relative;
+  }
+
+  .bell-icon {
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+    color: white;  // Keep bell icon white
+  }
+
+  .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #f44336;
+    color: white;  // Keep badge text white
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  .notification-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 350px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    background-color: white;
+
+    h3 {
+      margin: 0;
+      color: #333;  // Dark text for header
+    }
+
+    a {
+      color: #2196F3;  // Blue link color
+      text-decoration: none;
+      font-size: 14px;
+    }
+  }
+
+  .notification-list {
+    overflow-y: auto;
+    max-height: 350px;
+  }
+
+  .notification-item {
+    display: flex;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #333;  // Dark text for notifications
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  .notification-icon {
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 50%;
+    
+    &.new_article {
+      background-color: #2196F3;
+      color: white;  // White icon color
+    }
+    
+    &.reply_to_comment {
+      background-color: #4CAF50;
+      color: white;  // White icon color
+    }
+  }
+
+  .notification-content {
+    flex: 1;
+    
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #333;  // Dark text for content
+    }
+    
+    small {
+      color: #666;  // Gray text for date
+      font-size: 12px;
+    }
+  }
+
+  .reply-content {
+    font-style: italic;
+    color: #666;  // Gray text for replies
+  }

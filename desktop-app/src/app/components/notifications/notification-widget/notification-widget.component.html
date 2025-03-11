@@ -1,0 +1,39 @@
+<div class="notification-widget">
+    <div class="bell-icon" (click)="toggleDropdown()">
+      <i class="material-icons">notifications</i>
+      <span *ngIf="notifications().length" class="badge">{{notifications().length}}</span>
+    </div>
+
+    <div *ngIf="isOpen" class="notification-dropdown">
+      <div class="notification-header">
+        <h3>Notifications</h3>
+        <a routerLink="/notifications">View All</a>
+      </div>
+      <div class="notification-list">
+        <div *ngFor="let notification of notifications().slice(0,5)" 
+             class="notification-item"
+             [routerLink]="['/articles', notification.article_id]"
+             (click)="isOpen = false">
+          <div class="notification-icon" [ngClass]="notification.type">
+            <i class="material-icons">
+              {{notification.type === 'new_article' ? 'article' : 'comment'}}
+            </i>
+          </div>
+          <div class="notification-content">
+            <p>
+              <ng-container [ngSwitch]="notification.type">
+                <ng-container *ngSwitchCase="'new_article'">
+                  New article has been published
+                </ng-container>
+                <ng-container *ngSwitchCase="'reply_to_comment'">
+                  New reply: 
+                  <span class="reply-content">{{notification.content}}</span>
+                </ng-container>
+              </ng-container>
+            </p>
+            <small>{{notification.created_at | date}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

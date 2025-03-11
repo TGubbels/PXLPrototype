@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { NotificationWidgetComponent } from '../notifications/notification-widget/notification-widget.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NotificationWidgetComponent],
   templateUrl: './navbar.component.html',
   styles: [`
     .navbar {
@@ -26,6 +27,17 @@ import { AuthService } from '../../services/auth.service';
     .active {
       font-weight: bold;
     }
+    .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
   `]
 })
 export class NavbarComponent {
