@@ -1,1 +1,41 @@
-<p>comment works!</p>
+<div class="comment" [class.child-comment]="isChild">
+    <div class="comment-header">
+      <span class="user-name">{{comment.user.name}}</span>
+      <small>Created: {{comment.created_at | date}}</small>
+    </div>
+    <p class="comment-content">{{comment.content}}</p>
+    <div class="comment-footer">
+      <button class="reply-btn" (click)="onToggleReply(comment.id)">Reply</button>
+    </div>
+
+    <!-- Reply form -->
+    <div *ngIf="replyingTo === comment.id" class="reply-section">
+        <textarea 
+          [(ngModel)]="replyContent"
+          placeholder="Write a reply..."
+          rows="2"
+        ></textarea>
+        <div class="reply-actions">
+          <button (click)="onSubmitReply(comment.id)" 
+                  [disabled]="!replyContent">
+            Submit
+          </button>
+          <button class="cancel-btn" (click)="onCancelReply()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    
+      <!-- Recursive nested comments -->
+      <div class="child-comments" *ngIf="getChildComments(comment.id).length > 0">
+        <app-comment
+          *ngFor="let reply of getChildComments(comment.id)"
+          [comment]="reply"
+          [allComments]="allComments"
+          [replyingTo]="replyingTo"
+          [replyContent]="replyContent"
+          [isChild]="true"
+          (commentsUpdated)="commentsUpdated.emit($event)"
+        ></app-comment>
+      </div>
+  </div>

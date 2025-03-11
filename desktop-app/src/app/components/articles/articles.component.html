@@ -1,1 +1,18 @@
-<p>articles works!</p>
+<div class="articles-container">
+    <h2>Articles</h2>
+    <div class="articles-list">
+      <div *ngFor="let article of articles" 
+           class="article-card"
+           [routerLink]="['/articles', article.id]">
+        <div class="article-header">
+          <h3>{{article.title}}</h3>
+          <small>Created: {{article.created_at | date}}</small>
+        </div>
+        <p class="article-content">{{article.content | slice:0:200}}...</p>
+        <div class="article-footer">
+          <small>{{article.comments?.length || 0}} comments</small>
+        </div>
+      </div>
+    </div>
+    <app-add-article></app-add-article>
+  </div>

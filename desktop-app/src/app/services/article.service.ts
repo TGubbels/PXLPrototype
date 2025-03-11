@@ -23,4 +23,11 @@ export class ArticleService {
   replyToComment(commentId: number, content: string): Observable<ArticleComment> {
     return this.http.post<ArticleComment>(`${this.apiUrl}/comments/${commentId}/reply`, { content });
   }
+  getArticle(id: number): Observable<Article> {
+    return this.http.get<Article>(`${this.apiUrl}/articles/${id}`);
+  }
+  createArticle(title: string, content: string): Observable<Article> {
+    return this.http.post<Article>(`${this.apiUrl}/articles`, { title, content });
+  }
+  
 }
