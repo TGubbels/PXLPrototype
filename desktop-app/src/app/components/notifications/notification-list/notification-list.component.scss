@@ -1,0 +1,60 @@
+.notifications-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .notification-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(5px);
+    }
+  }
+
+  .notification-icon {
+    margin-right: 15px;
+    padding: 10px;
+    border-radius: 50%;
+    
+    &.new_article {
+      background-color: #2196F3;
+      color: white;
+    }
+    
+    &.reply_to_comment {
+      background-color: #4CAF50;
+      color: white;
+    }
+  }
+
+  .notification-content {
+    flex: 1;
+    
+    p {
+      margin: 0;
+      color: #333;
+    }
+    
+    small {
+      color: #666;
+    }
+  }
+
+  .reply-content {
+    font-style: italic;
+    color: #666;
+  }

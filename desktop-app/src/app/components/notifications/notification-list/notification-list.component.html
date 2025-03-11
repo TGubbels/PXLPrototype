@@ -1,0 +1,28 @@
+<div class="notifications-container">
+    <h2>Notifications</h2>
+    <div class="notification-list">
+      <div *ngFor="let notification of notifications" 
+           class="notification-item"
+           [routerLink]="['/articles', notification.article_id]">
+        <div class="notification-icon" [ngClass]="notification.type">
+          <i class="material-icons">
+            {{notification.type === 'new_article' ? 'article' : 'comment'}}
+          </i>
+        </div>
+        <div class="notification-content">
+          <p>
+            <ng-container [ngSwitch]="notification.type">
+              <ng-container *ngSwitchCase="'new_article'">
+                New article has been published
+              </ng-container>
+              <ng-container *ngSwitchCase="'reply_to_comment'">
+                Someone replied to your comment: 
+                <span class="reply-content">{{notification.content}}</span>
+              </ng-container>
+            </ng-container>
+          </p>
+          <small>{{notification.created_at | date}}</small>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -8,16 +8,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  template: `
-  <nav class="navbar">
-    <div class="nav-links">
-      <a routerLink="/dashboard" [class.active]="isActive('/dashboard')">Dashboard</a>
-      <a *ngIf="authService.isAuthenticated() | async" routerLink="/articles" [class.active]="isActive('/articles')">Articles</a>
-      <a *ngIf="!(authService.isAuthenticated() | async)" routerLink="/login" [class.active]="isActive('/login')">Login</a>
-      <a *ngIf="authService.isAuthenticated() | async" (click)="logout()" style="cursor: pointer;">Logout</a>
-    </div>
-  </nav>
-`,
+  templateUrl: './navbar.component.html',
   styles: [`
     .navbar {
       background-color: #333;
