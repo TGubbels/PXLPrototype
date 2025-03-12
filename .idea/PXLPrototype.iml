@@ -137,8 +137,22 @@
       <excludeFolder url="file://$MODULE_DIR$/be/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/be/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/clue/redis-protocol" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/clue/redis-react" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/evenement/evenement" />
       <excludeFolder url="file://$MODULE_DIR$/be/vendor/laravel/breeze" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/laravel/reverb" />
       <excludeFolder url="file://$MODULE_DIR$/be/vendor/laravel/sanctum" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/paragonie/sodium_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/pusher/pusher-php-server" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/ratchet/rfc6455" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/dns" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/event-loop" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/promise" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/promise-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/socket" />
+      <excludeFolder url="file://$MODULE_DIR$/be/vendor/react/stream" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

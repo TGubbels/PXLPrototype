@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/articles/{articleId}/comments', [CommentController::class, 'store']);
     Route::post('/comments/{commentId}/reply', [CommentController::class, 'reply']);
     Route::post('/comments/{commentId}/vote', [CommentController::class, 'vote']);
-
+    Route::get('/me', [AuthController::class, 'me']);
     Route::get('/notifications', [NotificationController::class, 'index']);
 });

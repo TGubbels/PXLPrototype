@@ -19,7 +19,7 @@ export class EchoService {
       wssPort: '8080',
       forceTLS: false,
       encrypted: false,
-      enabledTransports: ['ws', 'wss'],
+      enabledTransports: ['ws'],
       auth: {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
@@ -32,9 +32,6 @@ export class EchoService {
 
   listenToChannel(channelName: string, eventName: string, callback: (data: any) => void) {
     this.echo.private(channelName).listen(eventName, (event: any) => {
-      console.log('Channel:', channelName);
-      console.log('Event:', eventName);
-      console.log('Received data:', event);
       callback(event);
     });
   }

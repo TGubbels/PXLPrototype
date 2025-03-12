@@ -8,40 +8,40 @@ import { EchoService } from './echo.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService implements  OnDestroy{
+export class NotificationService implements OnDestroy {
   private apiUrl = 'http://localhost:8088/api';
   private echoService: EchoService = inject(EchoService);
+  private http: HttpClient = inject(HttpClient);
   notifications = signal<Notification[]>([]);
 
-  constructor(private http: HttpClient) {
-    // Initialize notifications
+  constructor() {
     this.getNotifications().subscribe();
-
-    // Listen for new notifications
-    this.echoService.listenToChannel('notifications', 'NotificationAdded', (notification) => {
-      const currentNotifications = this.notifications();
-      this.notifications.set([...currentNotifications, notification.notification]);
-      console.log('User-specific notification:', notification);
-    });
-
-    // Listen for user-specific notifications
-    this.echoService.listenToChannel(`notifications.user.1`, 'NotificationAdded', 
-      (notification) => {
-        const currentNotifications = this.notifications();
-        this.notifications.set([...currentNotifications, notification.notification]);
-        console.log('User-specific notification:', notification);
-        console.log(this.notifications());
-    });
+    this.connectToWebSockets();
   }
+
+
 
   ngOnDestroy(): void {
     this.echoService.disconnect();
   }
-  
+
+  connectToWebSockets() {
+    this.echoService.listenToChannel('notifications', 'NotificationAdded', (notification) => {
+      const currentNotifications = this.notifications();
+      this.notifications.set([...currentNotifications, notification.notification]);
+    });
+
+    this.echoService.listenToChannel(`notifications.user.${localStorage.getItem('user_id')}`, 'NotificationAdded',
+      (notification) => {
+        const currentNotifications = this.notifications();
+        this.notifications.set([...currentNotifications, notification.notification]);
+      });
+  }
+
 
   getNotifications(): Observable<Notification[]> {
-    
+
     return this.http.get<Notification[]>(`${this.apiUrl}/notifications`).pipe(
-      tap((notifications) => this.notifications.set( notifications)));
+      tap((notifications) => this.notifications.set(notifications)));
   }
 }

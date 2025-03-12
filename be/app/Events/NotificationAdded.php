@@ -35,19 +35,17 @@ class NotificationAdded implements ShouldBroadcast
      */
     public function broadcastOn(): PrivateChannel
     {
-        Log::info( 'NotificationAdded: ' . $this->notification->user_id);
-
         if ($this->notification->user_id === null) {
             return new PrivateChannel('notifications');
         } else {
-            Log::info( 'NotificationAdded: ' . $this->notification->user_id);
+
             return new PrivateChannel('notifications.user.' . $this->notification->user_id);
         }
     }
 
     public function broadcastAs()
     {
-        return 'NotificationAdded';  // <-- Custom event name
+        return 'NotificationAdded';
     }
     /**
 

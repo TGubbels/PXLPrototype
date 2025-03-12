@@ -10,9 +10,10 @@
         </div>
         <p class="article-content">{{article.content | slice:0:200}}...</p>
         <div class="article-footer">
-          <small>{{article.comments?.length || 0}} comments</small>
+          <small>{{article.comments.length || 0}} comments</small>
         </div>
       </div>
     </div>
     <app-add-article></app-add-article>
   </div>
+  

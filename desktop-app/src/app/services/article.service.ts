@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Article } from '../models/article.interface';
 import { ArticleComment } from '../models/comment.interface';
 import { EchoService } from './echo.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ import { EchoService } from './echo.service';
 export class ArticleService {
   private apiUrl = 'http://localhost:8088/api';
   //private echoService: EchoService = inject(EchoService);
-  constructor(private http: HttpClient) { }
+  private notificationService: NotificationService = inject(NotificationService);
+  constructor(private http: HttpClient) {
+   }
 
   getArticles(): Observable<Article[]> {
     return this.http.get<Article[]>(`${this.apiUrl}/articles`);
