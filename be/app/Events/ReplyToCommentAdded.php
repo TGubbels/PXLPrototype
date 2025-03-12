@@ -17,15 +17,15 @@ class ReplyToCommentAdded implements ShouldDispatchAfterCommit
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Comment $reply;
-    public int $comment_id;
+    public int $user_id;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Comment $reply, int $comment_id)
+    public function __construct(Comment $reply, int $user_id)
     {
         $this->reply = $reply;
-        $this->comment_id = $comment_id;
+        $this->user_id = $user_id;
     }
 
     /**

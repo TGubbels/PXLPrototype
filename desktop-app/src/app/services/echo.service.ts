@@ -18,7 +18,7 @@ export class EchoService implements OnDestroy {
       return;
     }
 
-    this.eventSource = new EventSource('http://localhost:8088/sse', {
+    this.eventSource = new EventSource(`http://localhost:8088/api/sse?user_id=${localStorage.getItem('user_id')}`, {
       withCredentials: false
     });
 

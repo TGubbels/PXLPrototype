@@ -33,7 +33,7 @@ class NotificationEventSubscriber
 
             $event->reply->article_id,
             NotificationType::REPLY_TO_COMMENT,
-            $event->comment_id,
+            $event->user_id,
             $event->reply->content
         );
     }

@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   constructor(private echoService: EchoService) {}
 
   ngOnInit() {
-    setTimeout(() => {  this.echoService.connectSSE();}, 2000);
+    this.echoService.connectSSE();
     // Initialize SSE connection after component is fully initialized
   
   }

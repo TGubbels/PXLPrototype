@@ -12,12 +12,18 @@ class SSEController extends Controller
     {
         // Set the maximum execution time to unlimited
         set_time_limit(0);
+        ignore_user_abort(true);
 
-        $response = new StreamedResponse(function () {
+        $userId = $request->query('user_id');
+
+        $response = new StreamedResponse(function () use ($userId) {
             $lastNotificationId = null;
+            $startTime = time();
+            $maxDuration = 5; // Close connection after 5 seconds
 
             while (true) {
-                $query = Notification::query();
+                $query =  Notification::where('user_id', $userId)
+                    ->orWhereNull('user_id');
 
                 if ($lastNotificationId) {
                     $query->where('id', '>', $lastNotificationId);
@@ -25,7 +31,7 @@ class SSEController extends Controller
 
                 $notifications = $query->get();
 
-                if ($notifications->isNotEmpty()) {
+                if ($notifications->isNotEmpty() && $lastNotificationId <$notifications->last()->id) {
                     $lastNotificationId = $notifications->last()->id;
 
                     echo "event: notification\n";
@@ -33,12 +39,8 @@ class SSEController extends Controller
                     flush();
                 }
 
-                // Send heartbeat every 25 seconds
-                echo "event: heartbeat\n";
-                echo "data: " . json_encode(['type' => 'heartbeat']) . "\n\n";
-                flush();
 
-                if (connection_aborted()) {
+                if (connection_aborted() || (time() - $startTime) > $maxDuration) {
                     break;
                 }
 
