@@ -1,4 +1,4 @@
-# PXLPrototype
+# PXLPrototype WebSockets
 To setup the application run this command in the be folder: composer install
 
 Then go into the be/devops folder, and run: docker compose up, to run the database for the backend.
