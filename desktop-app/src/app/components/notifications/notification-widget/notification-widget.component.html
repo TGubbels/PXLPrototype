@@ -1,7 +1,7 @@
 <div class="notification-widget">
     <div class="bell-icon" (click)="toggleDropdown()">
       <i class="material-icons">notifications</i>
-      <span *ngIf="notifications().length" class="badge">{{notifications().length}}</span>
+      <span *ngIf="this.notificationService.notifications().length" class="badge">{{this.notificationService.notifications().length}}</span>
     </div>
 
     <div *ngIf="isOpen" class="notification-dropdown">
@@ -10,7 +10,7 @@
         <a routerLink="/notifications">View All</a>
       </div>
       <div class="notification-list">
-        <div *ngFor="let notification of notifications().slice(0,5)" 
+        <div *ngFor="let notification of this.notificationService.notifications()" 
              class="notification-item"
              [routerLink]="['/articles', notification.article_id]"
              (click)="isOpen = false">

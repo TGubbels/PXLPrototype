@@ -39,7 +39,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
         <div class="dashboard-card notifications-card">
           <h3>Recent Notifications</h3>
           <div class="notifications-preview">
-            <div *ngFor="let notification of notifications()" 
+            <div *ngFor="let notification of notifications" 
                  class="notification-item"
                  [routerLink]="['/articles', notification.article_id]">
               <div class="notification-icon" [ngClass]="notification.type">
@@ -202,7 +202,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class DashboardComponent implements OnInit {
   protected authService = inject(AuthService);
   private notificationService = inject(NotificationService);
-  notifications = this.notificationService.notifications;
+  notifications = this.notificationService.notifications();
 
   ngOnInit() {
     this.notificationService.getNotifications().pipe(untilDestroyed(this)).subscribe();

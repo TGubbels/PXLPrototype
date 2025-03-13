@@ -22,7 +22,10 @@ export class NotificationWidgetComponent implements OnInit {
 
   
   ngOnInit() {
-    this.notificationService.getNotifications();
+    this.notificationService.getNotifications()
+    .pipe(untilDestroyed(this))
+    .subscribe({
+    });
   }
 
   toggleDropdown() {
