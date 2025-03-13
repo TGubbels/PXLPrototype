@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,12 +21,9 @@ import { EchoService } from './services/echo.service';
 })
 export class AppComponent implements OnInit {
   title = 'desktop-app';
-  
-  constructor(private echoService: EchoService) {}
+  private echoService: EchoService =  inject(EchoService);
 
   ngOnInit() {
     this.echoService.connectSSE();
-    // Initialize SSE connection after component is fully initialized
-  
   }
 }

@@ -10,9 +10,7 @@ class SSEController extends Controller
 {
     public function stream(Request $request): StreamedResponse
     {
-        // Set the maximum execution time to unlimited
         set_time_limit(0);
-        ignore_user_abort(true);
 
         $userId = $request->query('user_id');
 
@@ -31,14 +29,12 @@ class SSEController extends Controller
 
                 $notifications = $query->get();
 
-                if ($notifications->isNotEmpty() && $lastNotificationId <$notifications->last()->id) {
+                if ($notifications->isNotEmpty() && $lastNotificationId < $notifications->last()->id) {
                     $lastNotificationId = $notifications->last()->id;
-
                     echo "event: notification\n";
                     echo "data: " . json_encode(['notifications' => $notifications]) . "\n\n";
                     flush();
                 }
-
 
                 if (connection_aborted() || (time() - $startTime) > $maxDuration) {
                     break;
