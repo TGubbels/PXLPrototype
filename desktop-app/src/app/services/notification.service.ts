@@ -26,12 +26,12 @@ export class NotificationService implements OnDestroy {
   }
 
   connectToWebSockets() {
-    this.echoService.listenToChannel('notifications', 'NotificationAdded', (notification) => {
+    this.echoService.listenToChannel('notifications', '.NotificationAdded', (notification) => {
       const currentNotifications = this.notifications();
       this.notifications.set([...currentNotifications, notification.notification]);
     });
 
-    this.echoService.listenToChannel(`notifications.user.${localStorage.getItem('user_id')}`, 'NotificationAdded',
+    this.echoService.listenToChannel(`notifications.user.${localStorage.getItem('user_id')}`, '.NotificationAdded',
       (notification) => {
         const currentNotifications = this.notifications();
         this.notifications.set([...currentNotifications, notification.notification]);
