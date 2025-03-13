@@ -1,4 +1,4 @@
-# PXLPrototype
+# PXLPrototype SSE
 
 To start the application run this command in the be folder: composer install
 
