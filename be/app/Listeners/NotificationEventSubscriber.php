@@ -10,6 +10,7 @@ use App\Models\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Queue\InteractsWithQueue;
+use PhpMqtt\Client\Facades\MQTT;
 
 class NotificationEventSubscriber
 {
@@ -20,23 +21,29 @@ class NotificationEventSubscriber
     {
         //
     }
+
     public function handleArticleCreated(ArticleCreated $event)
     {
-        Notification::createNotification($event->article->id, NotificationType::NEW_ARTICLE);
+        $notification= Notification::createNotification($event->article->id, NotificationType::NEW_ARTICLE);
+        MQTT::publish('notifications.users', json_encode($notification) );
+
     }
 
 
     public function handleReplyToCommentAdded(ReplyToCommentAdded $event)
     {
 
-        Notification::createNotification(
+        $notification = Notification::createNotification(
 
             $event->reply->article_id,
             NotificationType::REPLY_TO_COMMENT,
             $event->comment_id,
             $event->reply->content
         );
+        MQTT::publish('notifications.users.' . $notification->user_id, json_encode($notification) );
+
     }
+
     /**
      * Handle the event.
      */

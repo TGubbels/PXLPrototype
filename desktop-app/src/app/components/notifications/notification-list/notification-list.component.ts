@@ -1,5 +1,5 @@
 // src/app/components/notification-list/notification-list.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NotificationService } from '../../../services/notification.service';
@@ -15,16 +15,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./notification-list.component.scss']
 })
 export class NotificationListComponent implements OnInit {
-  notifications: Notification[] = [];
+  private notificationService: NotificationService = inject(NotificationService);
+  notifications: Notification[] = this.notificationService.notifications();
 
-  constructor(private notificationService: NotificationService) {}
+ 
 
   ngOnInit() {
-    this.notificationService.getNotifications()
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (notifications) => this.notifications = notifications,
-        error: (error) => console.error('Error fetching notifications:', error)
-      });
+    
   }
 }
+
+
