@@ -2,7 +2,7 @@ import { Injectable, OnDestroy, inject } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { NotificationService } from "./notification.service";
 import { Notification } from "../models/notification.interface";
-import { StorageService } from "./storage.service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,11 @@ import { StorageService } from "./storage.service";
 export class EchoService implements OnDestroy {
   private eventSource: EventSource | null = null;
   private notificationService = inject(NotificationService);
-  private storageService = inject(StorageService);
   connectSSE() {
     if (this.eventSource) {
       return;
     }
-    this.eventSource = new EventSource(`http://localhost:8088/api/sse?user_id=${this.storageService.getItem('user_id')}`, {
+    this.eventSource = new EventSource(`http://localhost:8088/api/sse?user_id=${localStorage.getItem('user_id')}`, {
       withCredentials: false
     });
 

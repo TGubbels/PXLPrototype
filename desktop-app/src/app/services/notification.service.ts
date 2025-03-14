@@ -2,7 +2,7 @@ import { Injectable, signal, effect } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { Notification } from '../models/notification.interface';
-import { StorageService } from './storage.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class NotificationService {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+
   ) {
    
   }
