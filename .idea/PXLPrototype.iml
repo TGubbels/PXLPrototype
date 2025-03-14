@@ -139,9 +139,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/be/vendor/laravel/breeze" />
       <excludeFolder url="file://$MODULE_DIR$/be/vendor/laravel/sanctum" />
-      <excludeFolder url="file://$MODULE_DIR$/be/vendor/myclabs/php-enum" />
-      <excludeFolder url="file://$MODULE_DIR$/be/vendor/php-mqtt/client" />
-      <excludeFolder url="file://$MODULE_DIR$/be/vendor/php-mqtt/laravel-client" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
