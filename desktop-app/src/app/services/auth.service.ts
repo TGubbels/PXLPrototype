@@ -25,6 +25,7 @@ export class AuthService {
           };
           if(response.user_name){
             localStorage.setItem('user_name', response.user_name);
+            localStorage.setItem('user_id', response.user_id);
           }
         })
       );
