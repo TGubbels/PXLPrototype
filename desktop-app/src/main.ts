@@ -9,15 +9,10 @@ import { importProvidersFrom } from '@angular/core';
 export const connection: IMqttServiceOptions = {
   hostname: 'localhost',
   port: 8083,
-
-  clean: true, // Retain session
-  connectTimeout: 4000, // Timeout
-  reconnectPeriod: 4000, // Reconnection interval
-  // Authentication information
-  //clientId: 'mqttx_597046f4',
-  //username: 'emqx_test',
-  //password: 'emqx_test',
-  //protocol: 'ws',
+  path: '/mqtt',
+  clean: true, 
+  connectTimeout: 4000, 
+  reconnectPeriod: 4000, 
   connectOnCreate: false,
 }
 bootstrapApplication(AppComponent, {

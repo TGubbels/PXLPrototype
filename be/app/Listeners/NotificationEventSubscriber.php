@@ -25,7 +25,7 @@ class NotificationEventSubscriber
     public function handleArticleCreated(ArticleCreated $event)
     {
         $notification= Notification::createNotification($event->article->id, NotificationType::NEW_ARTICLE);
-        MQTT::publish('notifications.users', json_encode($notification) );
+        MQTT::publish('notifications.users', json_encode($notification),false );
 
     }
 
@@ -37,10 +37,10 @@ class NotificationEventSubscriber
 
             $event->reply->article_id,
             NotificationType::REPLY_TO_COMMENT,
-            $event->comment_id,
+            $event->user_id,
             $event->reply->content
         );
-        MQTT::publish('notifications.users.' . $notification->user_id, json_encode($notification) );
+        MQTT::publish('notifications.users.' . $notification->user_id, json_encode($notification), false );
 
     }
 
